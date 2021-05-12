@@ -5,11 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -18,8 +18,12 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sample.fxml")));
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, Color.WHITE);
 
+        Image icon = new Image("/resources/icon.png");
+        primaryStage.getIcons().add(icon);
+
+        primaryStage.setTitle("PKP management system");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
