@@ -5,30 +5,41 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
+
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    @FXML
+    private ChoiceBox<String> start = new ChoiceBox<>();
 
     @FXML
-    private ChoiceBox<String> start;
-    @FXML
-    private ChoiceBox<String> end;
+    private ChoiceBox<String> end = new ChoiceBox<>();
 
     @FXML
-    Label dateTime;
+    private Label dateTime;
 
-    private String[] stations = {"Krakow, Wroclaw, Warszawa"};
+    @FXML
+    private Button search;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
 
     @Override
@@ -38,6 +49,19 @@ public class Controller implements Initializable {
 
         initClock();
     }
+
+    public void searchRoute(ActionEvent event) throws IOException {
+        String nameStart = start.getValue();
+        String nameEnd = end.getValue();
+
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("route.fxml")));
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     private void initClock() {
 
