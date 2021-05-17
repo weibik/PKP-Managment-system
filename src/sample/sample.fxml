@@ -4,18 +4,18 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="381.0" prefWidth="637.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="381.0" prefWidth="637.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.sampleController">
    <children>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="-35.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/logo.png" />
          </image></ImageView>
       <Button layoutX="463.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="159.0" text="Zaloguj jako administrator" />
-      <ChoiceBox fx:id="start" layoutX="145.0" layoutY="186.0" prefHeight="26.0" prefWidth="104.0" />
-      <ChoiceBox fx:id="end" layoutX="413.0" layoutY="186.0" prefHeight="26.0" prefWidth="104.0" />
-      <Label layoutX="148.0" layoutY="163.0" prefHeight="18.0" prefWidth="98.0" text="Stacja początkowa" textAlignment="CENTER" />
-      <Label layoutX="424.0" layoutY="163.0" text="Stacja końcowa" />
+      <ChoiceBox fx:id="start" layoutX="177.0" layoutY="186.0" prefHeight="26.0" prefWidth="104.0" />
+      <ChoiceBox fx:id="end" layoutX="355.0" layoutY="186.0" prefHeight="26.0" prefWidth="104.0" />
+      <Label layoutX="182.0" layoutY="162.0" prefHeight="18.0" prefWidth="98.0" text="Stacja początkowa" textAlignment="CENTER" />
+      <Label layoutX="355.0" layoutY="162.0" text="Stacja końcowa" />
       <Label fx:id="dateTime" layoutX="255.0" layoutY="31.0" prefHeight="18.0" prefWidth="126.0" text="DATA" />
-      <Button fx:id="search" layoutX="306.0" layoutY="212.0" mnemonicParsing="false" onAction="#searchRoute" text="WYSZUKAJ" />
+      <Button fx:id="search" layoutX="281.0" layoutY="243.0" mnemonicParsing="false" onAction="#searchRoute" text="WYSZUKAJ" />
    </children>
 </AnchorPane>

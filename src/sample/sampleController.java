@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -19,11 +20,12 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class sampleController implements Initializable {
     @FXML
     private ChoiceBox<String> start = new ChoiceBox<>();
 
@@ -34,12 +36,10 @@ public class Controller implements Initializable {
     private Label dateTime;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         start.getItems().addAll("Krakow", "Wroclaw", "Warszawa");
         end.getItems().addAll("Krakow", "Wroclaw", "Warszawa");
-
         initClock();
     }
 
@@ -47,7 +47,6 @@ public class Controller implements Initializable {
         String nameStart = start.getValue();
         String nameEnd = end.getValue();
         try {
-            //Load second scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("route.fxml"));
             Parent root = loader.load();
 
