@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 
 import javafx.scene.control.Label;
@@ -21,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
+
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -34,12 +33,6 @@ public class Controller implements Initializable {
     @FXML
     private Label dateTime;
 
-    @FXML
-    private Button search;
-
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
 
     @Override
@@ -50,16 +43,21 @@ public class Controller implements Initializable {
         initClock();
     }
 
-    public void searchRoute(ActionEvent event) throws IOException {
+    public void searchRoute(ActionEvent event){
         String nameStart = start.getValue();
         String nameEnd = end.getValue();
+        try {
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("route.fxml"));
+            Parent root = loader.load();
 
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("route.fxml")));
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
     }
 
 
