@@ -5,12 +5,19 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.routeController">
-   <children>
-      <ImageView fitHeight="150.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../resources/logo.png" />
-         </image>
-      </ImageView>
-      <Label fx:id="dateTime" layoutX="286.0" layoutY="26.0" text="DATA" />
-   </children>
+    <ImageView fitHeight="150.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../resources/logo.png" />
+    </ImageView>
+    <Label fx:id="dateTime" layoutX="286.0" layoutY="26.0" text="DATA" />
+    <TableView fx:id="tableOfRoutes" layoutX="135.0" layoutY="144.0" prefHeight="196.0" prefWidth="362.0">
+      <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="122.19999694824219" text="Nazwa pociągu" />
+          <TableColumn fx:id="startTimeColumn" prefWidth="121.79998779296875" text="Czas przyjazdu" />
+          <TableColumn fx:id="endTimeColumn" prefWidth="119.60003662109375" text="Czas odjazdu" />
+      </columns>
+    </TableView>
+   <Label fx:id="fromLabel" layoutX="258.0" layoutY="97.0" text="Label" />
+   <Label fx:id="toLabel" layoutX="386.0" layoutY="97.0" text="Label" />
+   <Label layoutX="343.0" layoutY="97.0" text="Do" />
+   <Label layoutX="219.0" layoutY="97.0" text="Z" />
 </AnchorPane>

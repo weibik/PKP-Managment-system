@@ -20,6 +20,18 @@ public class TrainStation {
         maximumCapacity = capacity;
     }
 
+    public String getStationName() {
+        return stationName;
+    }
+
+    public List<Train> getListOfTrains() {
+        return listOfTrains;
+    }
+
+    public int getMaximumCapacity() {
+        return maximumCapacity;
+    }
+
     // adding train to the list
     public void addTrain(Train t){
         // only if there is still free place in the station
@@ -29,8 +41,6 @@ public class TrainStation {
         else {
             System.out.println("Max capacity reached!!");
         }
-
-
     }
 
     // deleting train from the list
