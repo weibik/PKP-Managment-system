@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.control.ChoiceBox;
 
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -27,18 +29,16 @@ import java.util.ResourceBundle;
 public class sampleController implements Initializable {
 
     @FXML
-    private ChoiceBox<String> start;
+    public ChoiceBox<String> start;
     @FXML
-    private ChoiceBox<String> end;
+    public ChoiceBox<String> end;
     @FXML
     private Label dateTime;
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        start.getItems().addAll("Cracow Station", "Rzeszow Station", "Warsaw Station");
-        end.getItems().addAll("Cracow Station", "Rzeszow Station", "Warsaw Station");
+        start.getItems().addAll("Cracow station", "Rzeszow station", "Warsaw station");
+        end.getItems().addAll("Cracow station", "Rzeszow station", "Warsaw station");
         initClock();
     }
 
@@ -47,10 +47,9 @@ public class sampleController implements Initializable {
         String nameEnd = end.getValue();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("route.fxml"));
+            routeController controller = new routeController(nameStart, nameEnd);
+            loader.setController(controller);
             Parent root = loader.load();
-
-            routeController routeCon = loader.getController();
-            routeCon.display(nameStart, nameEnd);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -60,15 +59,6 @@ public class sampleController implements Initializable {
             System.err.println(ex);
         }
     }
-
-    public String getFrom(){
-       return start.getValue();
-    }
-
-    public String getTo(){
-        return end.getValue();
-    }
-
 
     private void initClock() {
 

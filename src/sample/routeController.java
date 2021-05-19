@@ -24,6 +24,10 @@ public class routeController extends Main implements Initializable{
     public final ObservableList<TrainRoute> routes = getRoutes();
 
     @FXML
+    public String firstStation;
+    @FXML
+    public String lastStation;
+    @FXML
     private Label dateTime;
     @FXML
     private TableColumn<TrainRoute, String> nameColumn;
@@ -37,20 +41,18 @@ public class routeController extends Main implements Initializable{
     private Label fromLabel;
     @FXML
     private Label toLabel;
-    @FXML
-    private Label data;
-    @FXML
-    private Label dataa;
 
-    private String firstStation;
-    private String lastStation;
+    public routeController(String start, String end){
+        firstStation = start;
+        lastStation = end;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initClock();
+        fromLabel.setText(firstStation);
+        toLabel.setText(lastStation);
         showRoutes();
-        data.setText(toLabel.getText()) ;
-        dataa.setText(fromLabel.getText());
     }
 
     private void initClock() {
@@ -62,15 +64,8 @@ public class routeController extends Main implements Initializable{
         clock.play();
     }
 
-    public void display(String from, String to){
-        fromLabel.setText(from);
-        toLabel.setText(to);
-        firstStation = from;
-        lastStation = to;
-    }
-
-
     public void showRoutes(){
+
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTrain().getName()));
         startTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeOfStart()));
         endTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeOfEnd()));
@@ -98,8 +93,8 @@ public class routeController extends Main implements Initializable{
         TrainStation pkpRzeszow = new TrainStation("Rzeszow station", 10);
 
         list.add(pkpCracow);
-        list.add(pkpRzeszow);
         list.add(pkpWarsaw);
+        list.add(pkpRzeszow);
 
         return list;
     }
@@ -116,7 +111,6 @@ public class routeController extends Main implements Initializable{
         return routes;
     }
 
-
     public ObservableList<TrainRoute> getCertainRoutes(){
         ObservableList<TrainRoute> certainRoutes = FXCollections.observableArrayList();
         for (TrainRoute route : routes) {
@@ -126,5 +120,4 @@ public class routeController extends Main implements Initializable{
         }
         return certainRoutes;
     }
-
 }
