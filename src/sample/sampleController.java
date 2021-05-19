@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.ResourceBundle;
 
+@SuppressWarnings("ThrowablePrintedToSystemOut")
 public class sampleController implements Initializable {
 
     @FXML
@@ -36,8 +37,8 @@ public class sampleController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        start.getItems().addAll("Krakow", "Wroclaw", "Warszawa");
-        end.getItems().addAll("Krakow", "Wroclaw", "Warszawa");
+        start.getItems().addAll("Cracow Station", "Rzeszow Station", "Warsaw Station");
+        end.getItems().addAll("Cracow Station", "Rzeszow Station", "Warsaw Station");
         initClock();
     }
 
@@ -58,6 +59,14 @@ public class sampleController implements Initializable {
         } catch (IOException ex) {
             System.err.println(ex);
         }
+    }
+
+    public String getFrom(){
+       return start.getValue();
+    }
+
+    public String getTo(){
+        return end.getValue();
     }
 
 

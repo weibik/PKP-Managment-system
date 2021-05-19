@@ -14,13 +14,6 @@ import java.util.Objects;
 
 public class Main extends Application {
 
-    /*
-    public final ArrayList<Train> trains = listOfTrains();
-    public final TrainStationContainer stations = containerOfStations();
-    public final ObservableList<TrainRoute> routes = getRoutes();
-
-     */
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sample.fxml")));
@@ -39,8 +32,8 @@ public class Main extends Application {
         launch(args);
     }
 
-/*
 
+/*
     private ArrayList<Train> listOfTrains(){
         ArrayList<Train> trains = new ArrayList<>();
         trains.add(new Train("King Kong", 500, 150, TrainCondition.PENDOLINO));
@@ -77,8 +70,6 @@ public class Main extends Application {
 
         return routes;
     }
-
-
 
  */
 

@@ -8,11 +8,6 @@ import java.util.Map;
 public class TrainStationContainer {
     Map<String, TrainStation> stationsContainer = new HashMap<>();
 
-    // adding station to the hashmap
-    void addStationToTheMap(TrainStation station){
-        stationsContainer.put(station.stationName, station);
-    }
-
     TrainStation getTrainStation(String v) {
         for (TrainStation value : stationsContainer.values())
             if (value.stationName.equals(v))
@@ -20,6 +15,10 @@ public class TrainStationContainer {
         return null;
     }
 
+    // adding station to the hashmap
+    void addStationToTheMap(TrainStation station){
+        stationsContainer.put(station.stationName, station);
+    }
 
     // removing station from the hashmap
     void removeStationFromMap(TrainStation station){

@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -21,7 +20,7 @@ import java.util.ResourceBundle;
 public class routeController extends Main implements Initializable{
 
     public final ArrayList<Train> trains = listOfTrains();
-    public final TrainStationContainer stations = containerOfStations();
+    public final ArrayList<TrainStation> stations = listOfStations();
     public final ObservableList<TrainRoute> routes = getRoutes();
 
     @FXML
@@ -38,12 +37,20 @@ public class routeController extends Main implements Initializable{
     private Label fromLabel;
     @FXML
     private Label toLabel;
+    @FXML
+    private Label data;
+    @FXML
+    private Label dataa;
 
+    private String firstStation;
+    private String lastStation;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initClock();
         showRoutes();
+        data.setText(toLabel.getText()) ;
+        dataa.setText(fromLabel.getText());
     }
 
     private void initClock() {
@@ -58,18 +65,22 @@ public class routeController extends Main implements Initializable{
     public void display(String from, String to){
         fromLabel.setText(from);
         toLabel.setText(to);
+        firstStation = from;
+        lastStation = to;
     }
 
-    private void showRoutes(){
+
+    public void showRoutes(){
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTrain().getName()));
         startTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeOfStart()));
         endTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeOfEnd()));
 
-        tableOfRoutes.setItems(routes);
+        tableOfRoutes.setItems(getCertainRoutes());
     }
 
     private ArrayList<Train> listOfTrains(){
         ArrayList<Train> trains = new ArrayList<>();
+
         trains.add(new Train("King Kong", 500, 150, TrainCondition.PENDOLINO));
         trains.add(new Train("Ghidora", 200, 200, TrainCondition.BROKEN));
         trains.add(new Train("Golden Arrow", 200, 250, TrainCondition.NEW));
@@ -80,29 +91,40 @@ public class routeController extends Main implements Initializable{
         return trains;
     }
 
-    private TrainStationContainer containerOfStations(){
+    private ArrayList<TrainStation> listOfStations(){
+        ArrayList <TrainStation> list = new ArrayList<>();
         TrainStation pkpCracow = new TrainStation("Cracow station", 20 );
         TrainStation pkpWarsaw = new TrainStation("Warsaw station" , 30);
         TrainStation pkpRzeszow = new TrainStation("Rzeszow station", 10);
 
-        TrainStationContainer container = new TrainStationContainer();
-        container.addStationToTheMap(pkpCracow);
-        container.addStationToTheMap(pkpWarsaw);
-        container.addStationToTheMap(pkpRzeszow);
+        list.add(pkpCracow);
+        list.add(pkpRzeszow);
+        list.add(pkpWarsaw);
 
-        return container;
+        return list;
     }
 
     public  ObservableList<TrainRoute> getRoutes(){
         ObservableList<TrainRoute> routes = FXCollections.observableArrayList();
-        routes.add(new TrainRoute(trains.get(0), stations.getTrainStation("Cracow Station"), stations.getTrainStation("Warsaw Station"), "16:20", "20:50"));
-        routes.add(new TrainRoute(trains.get(1), stations.getTrainStation("Cracow Station"), stations.getTrainStation("Wroclaw Station"), "13:10", "18:21"));
-        routes.add(new TrainRoute(trains.get(2), stations.getTrainStation("Wroclaw Station"), stations.getTrainStation("Warsaw Station"), "05:15", "11:01"));
-        routes.add(new TrainRoute(trains.get(3), stations.getTrainStation("Wroclaw Station"), stations.getTrainStation("Cracow Station"), "09:38", "13:00"));
-        routes.add(new TrainRoute(trains.get(4), stations.getTrainStation("Warsaw Station"), stations.getTrainStation("Cracow Station"), "12:42", "17:49"));
-        routes.add(new TrainRoute(trains.get(5), stations.getTrainStation("Warsaw Station"), stations.getTrainStation("Wroclaw Station"), "22:05", "03:14"));
+        routes.add(new TrainRoute(trains.get(0), stations.get(0), stations.get(1), "16:20", "20:50"));
+        routes.add(new TrainRoute(trains.get(1), stations.get(1), stations.get(0), "13:10", "18:21"));
+        routes.add(new TrainRoute(trains.get(2), stations.get(1), stations.get(2),"05:15", "11:01"));
+        routes.add(new TrainRoute(trains.get(3), stations.get(2), stations.get(1), "09:38", "13:00"));
+        routes.add(new TrainRoute(trains.get(4), stations.get(2), stations.get(0),"12:42", "17:49"));
+        routes.add(new TrainRoute(trains.get(5), stations.get(0), stations.get(2), "22:05", "03:14"));
 
         return routes;
+    }
+
+
+    public ObservableList<TrainRoute> getCertainRoutes(){
+        ObservableList<TrainRoute> certainRoutes = FXCollections.observableArrayList();
+        for (TrainRoute route : routes) {
+            if (route.startStation.getStationName().equals(firstStation) && route.endStation.getStationName().equals(lastStation)) {
+                certainRoutes.add(route);
+            }
+        }
+        return certainRoutes;
     }
 
 }
