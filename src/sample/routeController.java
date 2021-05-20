@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 
+import javax.tools.Tool;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -70,8 +71,20 @@ public class routeController extends Main implements Initializable{
         startTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeOfStart()));
         endTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeOfEnd()));
 
-        tableOfRoutes.setItems(getCertainRoutes());
+        tableOfRoutes.setItems(getRoutes());
+
+        tableOfRoutes.setRowFactory(tv -> {
+            TableRow<TrainRoute> row = new TableRow<>();
+            row.setOnMouseEntered(event -> {
+                Train train = row.getItem().getTrain();
+                String info = "Max speed: " + train.getMaxSpeed() + "\nnumber of seats: " + train.getNumberOfSeats();
+                Tooltip tooltip = new Tooltip(info);
+                row.setTooltip(tooltip);
+            });
+            return row;
+        });
     }
+
 
     private ArrayList<Train> listOfTrains(){
         ArrayList<Train> trains = new ArrayList<>();
