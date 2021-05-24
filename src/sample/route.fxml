@@ -9,15 +9,22 @@
         <Image url="@../resources/logo.png" />
     </ImageView>
     <Label fx:id="dateTime" layoutX="286.0" layoutY="26.0" text="DATA" />
-    <TableView fx:id="tableOfRoutes" layoutX="135.0" layoutY="144.0" prefHeight="196.0" prefWidth="362.0">
+    <TableView fx:id="tableOfRoutes" layoutX="205.0" layoutY="136.0" prefHeight="196.0" prefWidth="362.0">
       <columns>
           <TableColumn fx:id="nameColumn" prefWidth="122.19999694824219" text="Nazwa pociągu" />
           <TableColumn fx:id="startTimeColumn" prefWidth="113.0" text="Czas przyjazdu" />
           <TableColumn fx:id="endTimeColumn" prefWidth="126.20001220703125" text="Czas odjazdu" />
       </columns>
     </TableView>
-   <Label fx:id="fromLabel" layoutX="241.0" layoutY="97.0" text="Label" />
-   <Label fx:id="toLabel" layoutX="386.0" layoutY="97.0" text="Label" />
-   <Label layoutX="343.0" layoutY="97.0" text="Do" />
-   <Label layoutX="203.0" layoutY="97.0" text="Z" />
+   <Label fx:id="fromLabel" layoutX="302.0" layoutY="97.0" text="Label" />
+   <Label fx:id="toLabel" layoutX="466.0" layoutY="97.0" text="Label" />
+   <Label layoutX="398.0" layoutY="97.0" text="Do" />
+   <Label layoutX="238.0" layoutY="97.0" text="Z" />
+   <Button fx:id="buy" layoutX="14.0" layoutY="136.0" mnemonicParsing="false" onAction="#buyTicket" text="Kup bilet" />
+   <Button fx:id="book" layoutX="95.0" layoutY="136.0" mnemonicParsing="false" text="Zarezerwuj bilet" />
+   <TableView fx:id="tableOfTickets" layoutX="36.0" layoutY="186.0" prefHeight="139.0" prefWidth="101.0">
+     <columns>
+       <TableColumn fx:id="ticketTimeColumn" prefWidth="100.80000457763671" text="O godzinie" />
+     </columns>
+   </TableView>
 </AnchorPane>

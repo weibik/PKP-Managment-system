@@ -6,12 +6,13 @@ import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.util.Duration;
+import javafx.scene.control.Alert;
 
-import javax.tools.Tool;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,9 +21,11 @@ import java.util.ResourceBundle;
 
 public class routeController extends Main implements Initializable{
 
-    public final ArrayList<Train> trains = listOfTrains();
-    public final ArrayList<TrainStation> stations = listOfStations();
-    public final ObservableList<TrainRoute> routes = getRoutes();
+    private final ArrayList<Train> trains = listOfTrains();
+    private final ArrayList<TrainStation> stations = listOfStations();
+    private final ObservableList<TrainRoute> routes = getRoutes();
+    private ObservableList<TrainRoute> userTickets = FXCollections.observableArrayList();
+    private TrainRoute clickedRoute;
 
     @FXML
     public String firstStation;
@@ -42,6 +45,14 @@ public class routeController extends Main implements Initializable{
     private Label fromLabel;
     @FXML
     private Label toLabel;
+    @FXML
+    private Button buy;
+    @FXML
+    private Button book;
+    @FXML
+    private TableView <TrainRoute> tableOfTickets;
+    @FXML
+    private TableColumn<TrainRoute, String> ticketTimeColumn;
 
     public routeController(String start, String end){
         firstStation = start;
@@ -54,6 +65,18 @@ public class routeController extends Main implements Initializable{
         fromLabel.setText(firstStation);
         toLabel.setText(lastStation);
         showRoutes();
+    }
+
+    public void buyTicket(ActionEvent event) throws Exception {
+        if(clickedRoute != null){
+            userTickets.add(clickedRoute);
+            ticketTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeOfStart()));
+            tableOfTickets.setItems(userTickets);
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No route is chosen", ButtonType.CANCEL);
+            alert.showAndWait();
+        }
     }
 
     private void initClock() {
@@ -71,7 +94,7 @@ public class routeController extends Main implements Initializable{
         startTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeOfStart()));
         endTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeOfEnd()));
 
-        tableOfRoutes.setItems(getRoutes());
+        tableOfRoutes.setItems(getCertainRoutes());
 
         tableOfRoutes.setRowFactory(tv -> {
             TableRow<TrainRoute> row = new TableRow<>();
@@ -81,10 +104,12 @@ public class routeController extends Main implements Initializable{
                 Tooltip tooltip = new Tooltip(info);
                 row.setTooltip(tooltip);
             });
+            row.setOnMouseClicked(event ->{
+                   clickedRoute = row.getItem();
+            });
             return row;
         });
     }
-
 
     private ArrayList<Train> listOfTrains(){
         ArrayList<Train> trains = new ArrayList<>();
@@ -120,6 +145,13 @@ public class routeController extends Main implements Initializable{
         routes.add(new TrainRoute(trains.get(3), stations.get(2), stations.get(1), "09:38", "13:00"));
         routes.add(new TrainRoute(trains.get(4), stations.get(2), stations.get(0),"12:42", "17:49"));
         routes.add(new TrainRoute(trains.get(5), stations.get(0), stations.get(2), "22:05", "03:14"));
+
+        routes.add(new TrainRoute(trains.get(1), stations.get(0), stations.get(1), "12:25", "17:20"));
+        routes.add(new TrainRoute(trains.get(0), stations.get(1), stations.get(0), "13:43", "18:41"));
+        routes.add(new TrainRoute(trains.get(3), stations.get(1), stations.get(2),"03:15", "07:06"));
+        routes.add(new TrainRoute(trains.get(2), stations.get(2), stations.get(1), "11:25", "14:20"));
+        routes.add(new TrainRoute(trains.get(5), stations.get(2), stations.get(0),"17:34", "22:49"));
+        routes.add(new TrainRoute(trains.get(4), stations.get(0), stations.get(2), "12:52", "19:01"));
 
         return routes;
     }
