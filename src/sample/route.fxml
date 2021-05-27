@@ -27,4 +27,6 @@
        <TableColumn fx:id="ticketTimeColumn" prefWidth="100.80000457763671" text="O godzinie" />
      </columns>
    </TableView>
+   <Button fx:id="Save" layoutX="36.0" layoutY="332.0" mnemonicParsing="false" onAction="#saveTickets" prefHeight="6.0" prefWidth="102.0" text="Zapisz" />
+   <Button fx:id="show" layoutX="35.0" layoutY="358.0" mnemonicParsing="false" onAction="#showTickets" prefHeight="26.0" prefWidth="102.0" text="Odczytaj" />
 </AnchorPane>

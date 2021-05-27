@@ -6,12 +6,12 @@ import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 import javafx.scene.control.Alert;
+import javafx.event.ActionEvent;
 
 import java.io.*;
 import java.net.URL;
@@ -26,10 +26,14 @@ public class routeController extends Main implements Initializable, Serializable
     private  ArrayList<TrainStation> stations;
     private  ObservableList<TrainRoute> routes;
 
-    private final ObservableList<TrainRoute> userTickets = FXCollections.observableArrayList();
+    private ObservableList<TrainRoute> userTickets = FXCollections.observableArrayList();
     private TrainRoute clickedRoute;
 
 
+    @FXML
+    public Button save;
+    @FXML
+    public Button show;
     @FXML
     public String firstStation;
     @FXML
@@ -145,6 +149,51 @@ public class routeController extends Main implements Initializable, Serializable
         }
     }
 
+    public void saveTickets(ActionEvent event){
+        try
+        {
+            String filename = "tickets.ser";
+            FileOutputStream file = new FileOutputStream(filename);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(new ArrayList<TrainRoute>(userTickets));
+
+            out.close();
+            file.close();
+            System.out.println("Tickets serialized");
+        }
+        catch (IOException ex)
+        {
+            System.out.println("IOException is caught");
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void showTickets(ActionEvent event){
+        String filename = "tickets.ser";
+        ArrayList<TrainRoute> deserializedTickets = new ArrayList<>();
+
+        try
+        {
+            FileInputStream file = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(file);
+            deserializedTickets = (ArrayList<sample.TrainRoute>) in.readObject();
+            userTickets = FXCollections.observableList(deserializedTickets);
+
+            ticketTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTimeOfStart()));
+            tableOfTickets.setItems(userTickets);
+
+            in.close();
+            file.close();
+            System.out.println("Tickets has been deserialized ");
+
+        }
+        catch(IOException | ClassNotFoundException ex)
+        {
+            System.out.println("IOException is caught");
+        }
+    }
+
+
     @SuppressWarnings("unchecked")
     public void deserialize(){
         String routesFileName = "routes.ser";
@@ -152,8 +201,6 @@ public class routeController extends Main implements Initializable, Serializable
         String stationsFileName = "stations.ser";
 
         ArrayList<TrainRoute> deserializedRoutes = new ArrayList<>();
-        ArrayList<Train> deserializedTrains = new ArrayList<>();
-        ArrayList<TrainStation> deserializedStations = new ArrayList<>();
 
         try
         {
