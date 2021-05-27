@@ -1,8 +1,9 @@
 package sample;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class TrainStation {
+public class TrainStation implements Serializable {
     String stationName;
     List<Train> listOfTrains = new LinkedList<>();
     int maximumCapacity;

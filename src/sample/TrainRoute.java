@@ -1,8 +1,8 @@
 package sample;
 
-import javafx.beans.property.SimpleStringProperty;
+import java.io.Serializable;
 
-public class TrainRoute {
+public class TrainRoute implements Serializable {
 
     public Train train;
     public TrainStation startStation;
